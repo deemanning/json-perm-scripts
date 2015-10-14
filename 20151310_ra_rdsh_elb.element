@@ -1,8 +1,7 @@
 {
     "AWSTemplateFormatVersion" : "2010-09-09",
-    "Description"              : "This template creates a internal Elastic Load Balancer using TCP port 5504",
+    "Description"              : "This template creates a internal Elastic Load Balancer using TCP port 3389",
     "Parameters"               : {
-        "SslCertificateName" : {
             "Description" : "none",
             "Type" : "String"
         },
@@ -29,11 +28,10 @@
                 },
                 "Listeners" : [
                     {
-                        "InstancePort" : "5504",
+                        "InstancePort" : "3389",
                         "InstanceProtocol" : "TCP",
-                        "LoadBalancerPort" : "5504",
+                        "LoadBalancerPort" : "3389",
                         "Protocol" : "TCP",
-                        "SSLCertificateId" : {
                             "Fn::Join": [
                                 "",
                                 [
