@@ -36,7 +36,7 @@
                 "Tags" : [
                     {
                         "Key" : "Name",
-                        "Value" : { "Fn::Join" : ["", [
+                        "Value" : { "Fn::Join" : ["ad.dice.lab", [
                             "RDSH-",
                             { "Ref" : "AWS::StackName" }
                         ]]}
@@ -50,19 +50,19 @@
             "Properties" : {
                 "GroupId" :  { "Ref": "RdshSecurityGroup" },
                 "IpProtocol" : "tcp",
-                "FromPort"   : "5504",
-                "ToPort"     : "5504",
+                "FromPort"   : "3389",
+                "ToPort"     : "3389",
                 "CidrIp" : "0.0.0.0/0"
             }
         },
-        "ElbToRdshIngressTcp443" : {
+        "ElbToRdshIngressTcp5504" : {
             "Type" : "AWS::EC2::SecurityGroupIngress",
             "Condition" : "UseELB",
             "Properties" : {
                 "GroupId" :  { "Ref": "RdshSecurityGroup" },
                 "IpProtocol" : "tcp",
-                "FromPort"   : "5504",
-                "ToPort"     : "5504",
+                "FromPort"   : "3389",
+                "ToPort"     : "3389",
                 "SourceSecurityGroupId" : { "Ref": "RdshElbSecurityGroup" }
             }
         },
@@ -77,8 +77,8 @@
                 "SecurityGroupIngress" : [
                     {
                         "IpProtocol" : "tcp",
-                        "FromPort"   : "5504",
-                        "ToPort"     : "5504",
+                        "FromPort"   : "3389",
+                        "ToPort"     : "3389",
                         "CidrIp"     : "0.0.0.0/0"
                     }
 					
@@ -86,8 +86,8 @@
                 "SecurityGroupEgress" : [
                     {
                         "IpProtocol" : "tcp",
-                        "FromPort"   : "5504",
-                        "ToPort"     : "5504",
+                        "FromPort"   : "3389",
+                        "ToPort"     : "3389",
                         "CidrIp"     : "0.0.0.0/0"
                     }
                 ],
