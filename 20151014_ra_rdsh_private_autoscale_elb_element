@@ -228,7 +228,7 @@
                                 }
                             },
                             "c:\\cfn\\scripts\\configure-rdsh.ps1" : {
-                                "source" : "https://s3.amazonaws.com/cf-templates-1mdi6dx9a6ca7-us-east-1/20151310_ra_configure-rdsh.ps1"
+                                "source" : "https://s3.amazonaws.com/cf-templates-1mdi6dx9a6ca7-us-east-1/20151014_ra_configure-rdsh.ps1"
                             }
                         },
                         "services" : {
