@@ -1,20 +1,17 @@
 {
     "AWSTemplateFormatVersion" : "2010-09-09",
     "Description"              : "This template creates a internal Elastic Load Balancer using TCP port 3389",
-    "Parameters"               : {
-            "Description" : "none",
-            "Type" : "String"
-        },
+    "Parameters" : {
         "PublicSubnetIDs" : {
             "Description" : "A list of Public subnet IDs to attach to the load balancer.",
             "Type" : "List<AWS::EC2::Subnet::Id>"
         },
         "SecurityGroupId" : {
-            "Description" : "ID of the security group for ELB",
+         "Description" : "ID of the security group for ELB",
             "Type"        : "AWS::EC2::SecurityGroup::Id"
         }
     },
-    "Resources" : {
+  "Resources" : {
         "ELB" : {
             "Type": "AWS::ElasticLoadBalancing::LoadBalancer",
             "Properties": {
@@ -31,22 +28,8 @@
                         "InstancePort" : "3389",
                         "InstanceProtocol" : "TCP",
                         "LoadBalancerPort" : "3389",
-                        "Protocol" : "TCP",
-                            "Fn::Join": [
-                                "",
-                                [
-                                    "arn:aws:iam::",
-                                    {
-                                        "Ref":"AWS::AccountId"
-                                    },
-                                    ":server-certificate/",
-                                    {
-                                        "Ref":"SslCertificateName"
-                                    }
-                                ]
-                            ]
+                        "Protocol" : "TCP"
                         }
-                    }
                 ],
                 "Policies" : [
                 ],
