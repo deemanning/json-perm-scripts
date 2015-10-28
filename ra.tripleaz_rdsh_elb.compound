@@ -105,9 +105,9 @@
 			"DependsOn" : "RdshSecurityGroupStack",
        	 	"Properties" : {
            		"TemplateURL" : "https://s3.amazonaws.com/cf-templates-1mdi6dx9a6ca7-us-east-1/20151014_ra_rdsh_elb.element",
-           	 	"Parameters" : {
-					"PrivateSubnetIDs" : {
-                        "Fn::Join" : [
+          "Parameters" : {
+					                "PrivateSubnetIDs" : {
+				"Fn::Join" : [
                             ",",
                             { "Ref" : "ElbPrivateSubnetIDs" }
                         ]
@@ -195,8 +195,9 @@
 					"SecurityGroupIdRDSH" : { "Fn::GetAtt" : [ "RdshSecurityGroupStack", "Outputs.RdshSecurityGroupId" ] },
 					"VPC" : { "Ref" : "VPC" }
            		}
-			}
-      	}
+       	 	}		
+    	}
+       	 	
     },
     "Outputs" : {
         "RdshLoadBalancerName" : {
