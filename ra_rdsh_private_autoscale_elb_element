@@ -25,12 +25,6 @@
             "Type" : "String",
             "MinLength" : "1"
         },
-        "RemoteAccessUserGroup" : {
-            "Description" : "Domain group of users authorized to use the RDSH",
-            "Type" : "String",
-            "Default" : "Domain Admins",
-            "MinLength" : "1"
-        },
         "DomainJoinPassword" : {
             "Description" : "Password for the domain join user. Must be at least 8 characters containing letters, numbers and symbols",
             "Type"        : "String",
@@ -46,7 +40,7 @@
             "Default"     : "StackAdmin",
             "MinLength"   : "5",
             "MaxLength"   : "25",
-            "AllowedPattern" : "[a-zA-Z0-9_]*"
+            "AllowedPattern" : "[a-zA-Z0-9]*"
         },
         "DomainDNSName" : {
             "Description" : "Fully qualified domain name (FQDN) of the forest root domain e.g. example.com",
@@ -55,11 +49,6 @@
             "MinLength"   : "3",
             "MaxLength"   : "25",
             "AllowedPattern" : "[a-zA-Z0-9]+\\..+"
-        },
-        "DomainDNSServers" : {
-            "Description" : "Comma-separated list of IP addresses of DNS Servers. Commonly the Domain Controllers. (e.g. 10.0.0.10,10.0.64.10)",
-            "Type"        : "CommaDelimitedList",
-            "Default"     : "10.0.0.10"
         },
         "DomainNetBIOSName" : {
             "Description" : "NetBIOS name of the domain (e.g. EXAMPLE)",
@@ -72,10 +61,6 @@
         "PrivateSubnetID" : {
             "Description" : "Private Subnet ID where the RDSH instance will run.",
             "Type"        : "AWS::EC2::Subnet::Id"
-        },
-        "SecurityGroupIdDomainMember" : {
-            "Description" : "ID of the security group for Active Directory domain members",
-            "Type"        : "AWS::EC2::SecurityGroup::Id"
         },
         "SecurityGroupIdRDSH" : {
             "Description" : "ID of the security group for RDSH instances",
@@ -228,7 +213,7 @@
                                 }
                             },
                             "c:\\cfn\\scripts\\configure-rdsh.ps1" : {
-                                "source" : "https://s3.amazonaws.com/cf-templates-1mdi6dx9a6ca7-us-east-1/20151014_ra_configure-rdsh.ps1"
+                                "source" : "https://s3.amazonaws.com/cf-templates-1xecdjh8obo1h-us-east-1/configure-rdsh.ps1"
                             }
                         },
                         "services" : {
@@ -331,7 +316,7 @@
                                         ]
                                     ]
                                 },
-                                "waitAfterCompletion" : "forever"
+                                "waitAfterCompletion" : "0"
                             }
                         }
                     },
