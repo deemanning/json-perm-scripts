@@ -28,10 +28,10 @@
                 "m4.xlarge"
             ]
         },
-        "RemoteAccessUserGroup" : {
+        "DomainAccessUserGroup" : {
             "Description" : "Domain group of users authorized to use the RDSH",
             "Type" : "String",
-            "Default" : "Domain Admins",
+            "Default" : "Domain Users",
             "MinLength" : "1"
         },
         "DomainJoinPassword" : {
@@ -93,18 +93,18 @@
     	"RdshSecurityGroupStack" : {
 	    	"Type" : "AWS::CloudFormation::Stack",
        	 	"Properties" : {
-           		"TemplateURL" : "https://s3.amazonaws.com/cf-templates-1mdi6dx9a6ca7-us-east-1/20151014_ra_rdsh_security_group.element",
+           		"TemplateURL" : "https://s3.amazonaws.com/app-chemistry/templates/ra_rdsh_security_group.element",
            	 	"Parameters" : {
 					"VPC" : { "Ref" : "VPC" },
                     "UseELB" : "true"
            		}
-			}
+		}
       	},	
     	"RdshElbStack" : {
 	    	"Type" : "AWS::CloudFormation::Stack",
 			"DependsOn" : "RdshSecurityGroupStack",
        	 	"Properties" : {
-           		"TemplateURL" : "https://s3.amazonaws.com/cf-templates-1mdi6dx9a6ca7-us-east-1/20151014_ra_rdsh_elb.element",
+           		"TemplateURL" : "https://s3.amazonaws.com/app-chemistry/templates/ra_rdsh_elb.element",
           "Parameters" : {
 					                "PrivateSubnetIDs" : {
 				"Fn::Join" : [
@@ -114,21 +114,21 @@
                     },
 					"SecurityGroupId" : { "Fn::GetAtt" : [ "RdshSecurityGroupStack", "Outputs.RdshElbSecurityGroupId" ] }
            		}
-			}
+		}
       	},
     	"Rdsh1Stack" : {
 	    	"Type" : "AWS::CloudFormation::Stack",
 			"DependsOn" : "RdshElbStack",
        	 	"Properties" : {
-           		"TemplateURL" : "https://s3.amazonaws.com/cf-templates-1mdi6dx9a6ca7-us-east-1/20151014_ra_rdsh_private_autoscale_elb.element",
+           		"TemplateURL" : "https://s3.amazonaws.com/app-chemistry/templates/ra_rdsh_private_autoscale_elb.element",
            	 	"Parameters" : {
 					"KeyPairName" : {"Ref" : "KeyPairName"},
 					"RdshInstanceType" : {"Ref" : "InstanceTypeRdsh"},
 					"RdshElbName" : { "Fn::GetAtt" : [ "RdshElbStack", "Outputs.LoadBalancerName" ] },
-                    "RemoteAccessUserGroup" : { "Ref" : "RemoteAccessUserGroup" },
                     "DomainJoinPassword" : { "Ref" : "DomainJoinPassword" },
                     "DomainJoinUser" : { "Ref" : "DomainJoinUser" },
                     "DomainDNSName" : { "Ref" : "DomainDNSName" },
+					"DomainAccessUserGroup" : { "Ref" : "DomainAccessUserGroup" },
                     "DomainDNSServers" : {
                         "Fn::Join" : [
                             ",",
@@ -141,21 +141,21 @@
 					"SecurityGroupIdRDSH" : { "Fn::GetAtt" : [ "RdshSecurityGroupStack", "Outputs.RdshSecurityGroupId" ] },
 					"VPC" : { "Ref" : "VPC" }
            		}
-			}
+		}
       	},
     	"Rdsh2Stack" : {
 	    	"Type" : "AWS::CloudFormation::Stack",
 			"DependsOn" : "RdshElbStack",
        	 	"Properties" : {
-           		"TemplateURL" : "https://s3.amazonaws.com/cf-templates-1mdi6dx9a6ca7-us-east-1/20151014_ra_rdsh_private_autoscale_elb.element",
+           		"TemplateURL" : "https://s3.amazonaws.com/app-chemistry/templates/ra_rdsh_private_autoscale_elb.element",
            	 	"Parameters" : {
 					"KeyPairName" : {"Ref" : "KeyPairName"},
 					"RdshInstanceType" : {"Ref" : "InstanceTypeRdsh"},
 					"RdshElbName" : { "Fn::GetAtt" : [ "RdshElbStack", "Outputs.LoadBalancerName" ] },
-                    "RemoteAccessUserGroup" : { "Ref" : "RemoteAccessUserGroup" },
                     "DomainJoinPassword" : { "Ref" : "DomainJoinPassword" },
                     "DomainJoinUser" : { "Ref" : "DomainJoinUser" },
                     "DomainDNSName" : { "Ref" : "DomainDNSName" },
+					"DomainAccessUserGroup" : { "Ref" : "DomainAccessUserGroup" },
                     "DomainDNSServers" : {
                         "Fn::Join" : [
                             ",",
@@ -168,21 +168,21 @@
 					"SecurityGroupIdRDSH" : { "Fn::GetAtt" : [ "RdshSecurityGroupStack", "Outputs.RdshSecurityGroupId" ] },
 					"VPC" : { "Ref" : "VPC" }
            		}
-			}
+		}
       	},
     	"Rdsh3Stack" : {
 	    	"Type" : "AWS::CloudFormation::Stack",
 			"DependsOn" : "RdshElbStack",
        	 	"Properties" : {
-           		"TemplateURL" : "https://s3.amazonaws.com/cf-templates-1mdi6dx9a6ca7-us-east-1/20151014_ra_rdsh_private_autoscale_elb.element",
+           		"TemplateURL" : "https://s3.amazonaws.com/app-chemistry/templates/ra_rdsh_private_autoscale_elb.element",
            	 	"Parameters" : {
 					"KeyPairName" : {"Ref" : "KeyPairName"},
 					"RdshInstanceType" : {"Ref" : "InstanceTypeRdsh"},
 					"RdshElbName" : { "Fn::GetAtt" : [ "RdshElbStack", "Outputs.LoadBalancerName" ] },
-                    "RemoteAccessUserGroup" : { "Ref" : "RemoteAccessUserGroup" },
                     "DomainJoinPassword" : { "Ref" : "DomainJoinPassword" },
                     "DomainJoinUser" : { "Ref" : "DomainJoinUser" },
                     "DomainDNSName" : { "Ref" : "DomainDNSName" },
+					"DomainAccessUserGroup" : { "Ref" : "DomainAccessUserGroup" },
                     "DomainDNSServers" : {
                         "Fn::Join" : [
                             ",",
