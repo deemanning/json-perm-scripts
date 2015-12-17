@@ -25,6 +25,12 @@
             "Type" : "String",
             "MinLength" : "1"
         },
+        "DomainAccessUserGroup" : {
+            "Description" : "Domain group of users authorized to use the RDSH",
+            "Type" : "String",
+            "Default" : "Domain Users",
+            "MinLength" : "1"
+        },
         "DomainJoinPassword" : {
             "Description" : "Password for the domain join user. Must be at least 8 characters containing letters, numbers and symbols",
             "Type"        : "String",
@@ -40,7 +46,7 @@
             "Default"     : "StackAdmin",
             "MinLength"   : "5",
             "MaxLength"   : "25",
-            "AllowedPattern" : "[a-zA-Z0-9]*"
+            "AllowedPattern" : "[a-zA-Z0-9_]*"
         },
         "DomainDNSName" : {
             "Description" : "Fully qualified domain name (FQDN) of the forest root domain e.g. example.com",
@@ -49,6 +55,11 @@
             "MinLength"   : "3",
             "MaxLength"   : "25",
             "AllowedPattern" : "[a-zA-Z0-9]+\\..+"
+        },
+        "DomainDNSServers" : {
+            "Description" : "Comma-separated list of IP addresses of DNS Servers. Commonly the Domain Controllers. (e.g. 10.0.0.10,10.0.64.10)",
+            "Type"        : "CommaDelimitedList",
+            "Default"     : "10.0.0.10"
         },
         "DomainNetBIOSName" : {
             "Description" : "NetBIOS name of the domain (e.g. EXAMPLE)",
@@ -61,6 +72,10 @@
         "PrivateSubnetID" : {
             "Description" : "Private Subnet ID where the RDSH instance will run.",
             "Type"        : "AWS::EC2::Subnet::Id"
+        },
+        "SecurityGroupIdDomainMember" : {
+            "Description" : "ID of the security group for Active Directory domain members",
+            "Type"        : "AWS::EC2::SecurityGroup::Id"
         },
         "SecurityGroupIdRDSH" : {
             "Description" : "ID of the security group for RDSH instances",
@@ -97,34 +112,31 @@
         },
         "AWSRegionArch2AMI" : {
             "us-east-1" : {
-                "64" : "ami-5b9e6b30"
+                "64" : "ami-1df0ac78"
             },
-			"us-east-1" : {
-				"64" : "ami-c9cea0ac"
-			},
             "us-west-2" : {
-                "64" : "ami-67c7ff57"
+                "64" : "ami-f8f715cb"
             },
             "us-west-1" : {
-                "64" : "ami-c5688281"
+                "64" : "ami-91f93ad5"
             },
             "eu-west-1" : {
-                "64" : "ami-c1740ab6"
+                "64" : "ami-2fcbf458"
             },
             "eu-central-1" : {
-                "64" : "ami-2e87be33"
+                "64" : "ami-f2f5f9ef"
             },
             "ap-southeast-1" : {
-                "64" : "ami-e0d1ebb2"
+                "64" : "ami-faedfea8"
             },
             "ap-northeast-1" : {
-                "64" : "ami-c6b46dc6"
+                "64" : "ami-3e93fe3e"
             },
             "sa-east-1" : {
-                "64" : "ami-b93bbba4"
+                "64" : "ami-02952d6e"
             },
             "ap-southeast-2" : {
-                "64" : "ami-f9760dc3"
+                "64" : "ami-7bda9041"
             }
         }
     },
@@ -213,7 +225,7 @@
                                 }
                             },
                             "c:\\cfn\\scripts\\configure-rdsh.ps1" : {
-                                "source" : "https://s3.amazonaws.com/cf-templates-1xecdjh8obo1h-us-east-1/configure-rdsh.ps1"
+                                "source" : "https://s3.amazonaws.com/app-chemistry/scripts/configure-rdsh.ps1"
                             }
                         },
                         "services" : {
@@ -305,18 +317,18 @@
                                     "Fn::Join" : [
                                         "",
                                         [
-                                            "powershell.exe -ExecutionPolicy RemoteSigned",
+                                            "powershell.exe -ExecutionPolicy Bypass",
                                             " C:\\cfn\\scripts\\configure-rdsh.ps1 ",
                                             " -DomainNetBiosName ", { "Ref" : "DomainNetBIOSName" },
                                             " -GroupName ",
                                             "'",
-                                            { "Ref" : "RemoteAccessUserGroup" },
+                                            { "Ref" : "DomainAccessUserGroup" },
                                             "'",
                                             " -Verbose"
                                         ]
                                     ]
                                 },
-                                "waitAfterCompletion" : "0"
+                                "waitAfterCompletion" : "forever"
                             }
                         }
                     },
