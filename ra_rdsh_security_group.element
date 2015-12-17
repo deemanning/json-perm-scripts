@@ -44,7 +44,7 @@
                 ]
             }
         },
-        "PrivateToRdshIngressTcp5504" : {
+        "PrivateToRdshIngressTcp3389" : {
             "Type" : "AWS::EC2::SecurityGroupIngress",
             "Condition" : "NoELB",
             "Properties" : {
@@ -55,7 +55,7 @@
                 "CidrIp" : "0.0.0.0/0"
             }
         },
-        "ElbToRdshIngressTcp5504" : {
+        "ElbToRdshIngressTcp3389" : {
             "Type" : "AWS::EC2::SecurityGroupIngress",
             "Condition" : "UseELB",
             "Properties" : {
